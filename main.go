@@ -22,6 +22,9 @@ func main() {
 		log.Panic(err)
 	}
 
+	// wait for merge
+	time.Sleep(time.Second * 1)
+
 	// search documents
 	r, err := index.Reader()
 	if err != nil {
@@ -74,10 +77,10 @@ func indexDocuments(w *bluge.Writer) error {
 		doc := bluge.NewDocument(strconv.Itoa(i))
 		doc.AddField(bluge.NewKeywordField("_id", strconv.Itoa(i)).StoreValue().Sortable().Aggregatable())
 		doc.AddField(bluge.NewKeywordField("gender", "male").StoreValue().Sortable().Aggregatable())
-		doc.AddField(bluge.NewTextField("name", "John Doe").SearchTermPositions().HighlightMatches())
-		doc.AddField(bluge.NewTextField("email", "jone@mail.com"))
-		doc.AddField(bluge.NewTextField("phone", "1234567890"))
-		doc.AddField(bluge.NewDateTimeField("@timestamp", time.Now()))
+		doc.AddField(bluge.NewTextField("name", "John Doe").StoreValue().SearchTermPositions().HighlightMatches())
+		doc.AddField(bluge.NewTextField("email", "jone@mail.com").StoreValue().SearchTermPositions().HighlightMatches())
+		doc.AddField(bluge.NewTextField("phone", "1234567890").StoreValue().SearchTermPositions().HighlightMatches())
+		doc.AddField(bluge.NewDateTimeField("@timestamp", time.Now()).StoreValue().Sortable().Aggregatable())
 		err := w.Update(doc.ID(), doc)
 		if err != nil {
 			return err
