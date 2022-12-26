@@ -43,3 +43,9 @@ total 9536
 -rw-------  1 yanghengfei  staff   1.7K Dec 26 18:37 000000003566.seg
 -rw-------  1 yanghengfei  staff   307B Dec 26 18:37 000000005c75.snp
 ```
+
+Tips
+
+> 1. if you not sleep for merge, quickly quit after write data, it maybe many seg files. because it has no time to do merge.
+> 2. it will has hundreds seg files when it writing.
+> 3. if you want reduce files during writing, just use batch. like: 1000 documents one batch, it will just create 10 files for 10,000 documents.
